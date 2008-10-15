@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -26,6 +26,7 @@ BuildRequires:  OpenEXR_CTL-devel
 BuildRequires:  OpenEXR_CTL
 BuildRequires:  fltk-devel
 %if %with_Cg
+ExclusiveArch:  i386 x86_64
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
 Provides: OpenEXR_Viewers = %{version}
@@ -51,7 +52,7 @@ with CTL support, applying rendering and display transforms in line with
 the current discussions at the AMPAS Image Interchange Framework committee
 (September 2006).
 
-This is the freeworld version compiled with nVidia Cg support
+This is the nonfree version compiled with nVidia Cg support
 See: http://developer.nvidia.com/object/cg_toolkit.html
 %else
 
@@ -124,6 +125,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 15 2008 kwizart < kwizart at gmail.com > - 1.0.1-3
+- Fix: we are -nonfree
+- Cg only exist on i386 x86_64
+
 * Sat May 10 2008 kwizart < kwizart at gmail.com > - 1.0.1-2
 - Ghost the alternative provides
 - Obsoletes OpenEXR-utils
