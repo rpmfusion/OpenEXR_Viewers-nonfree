@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.1
-Release:        4%{?dist}
+Release:        4%{?dist}.1
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -68,6 +68,7 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n openexr_viewers-%{version}
 %patch0 -p1 -b .gcc43
+%patch1 -p1 -b .gcc44
 
 
 %build
@@ -126,8 +127,9 @@ fi
 %endif
 
 %changelog
-* Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4
+* Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4.1
 - Rebuild for gcc44
+- Restore build for i386 and x86_64 for now.
 
 * Wed Oct 15 2008 kwizart < kwizart at gmail.com > - 1.0.1-3
 - Fix: we are -nonfree
