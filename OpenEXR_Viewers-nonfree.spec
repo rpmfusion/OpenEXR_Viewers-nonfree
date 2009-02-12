@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -20,13 +20,14 @@ License:        AMPAS BSD
 URL:            http://www.openexr.com
 Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
 Patch0:         openexr_viewers-1.0.1-gcc43.patch
+Patch1:         openexr_viewers-1.0.1-gcc44.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  OpenEXR_CTL-devel
 BuildRequires:  OpenEXR_CTL
 BuildRequires:  fltk-devel
 %if %with_Cg
-ExclusiveArch:  i386 x86_64
+ExclusiveArch:  %{ix86} x86_64
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
 Provides: OpenEXR_Viewers = %{version}
@@ -125,6 +126,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4
+- Rebuild for gcc44
+
 * Wed Oct 15 2008 kwizart < kwizart at gmail.com > - 1.0.1-3
 - Fix: we are -nonfree
 - Cg only exist on i386 x86_64
