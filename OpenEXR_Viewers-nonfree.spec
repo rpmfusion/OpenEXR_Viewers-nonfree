@@ -27,7 +27,7 @@ BuildRequires:  OpenEXR_CTL-devel
 BuildRequires:  OpenEXR_CTL
 BuildRequires:  fltk-devel
 %if %with_Cg
-ExclusiveArch:  %{ix86} x86_64
+ExclusiveArch:  i386 x86_64
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
 Provides: OpenEXR_Viewers = %{version}
