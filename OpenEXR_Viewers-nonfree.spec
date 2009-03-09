@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.1
-Release:        4%{?dist}.1
+Release:        5%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -27,7 +27,7 @@ BuildRequires:  OpenEXR_CTL-devel
 BuildRequires:  OpenEXR_CTL
 BuildRequires:  fltk-devel
 %if %with_Cg
-ExclusiveArch:  i386 x86_64
+ExclusiveArch:  i586 x86_64
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
 Provides: OpenEXR_Viewers = %{version}
@@ -127,6 +127,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar  9 2009 kwizart < kwizart at gmail.com > - 1.0.1-5
+- Switch i386 to i586
+
 * Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4.1
 - Rebuild for gcc44
 - Restore build for i386 and x86_64 for now.
