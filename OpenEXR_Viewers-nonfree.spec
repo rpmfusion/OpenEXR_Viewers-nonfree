@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -127,6 +127,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.0.1-6
+- rebuild for new F11 features
+
 * Mon Mar  9 2009 kwizart < kwizart at gmail.com > - 1.0.1-5
 - Switch i386 to i586
 
