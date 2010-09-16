@@ -17,22 +17,3 @@ diff -up openexr_viewers-1.0.1/exrdisplay/applyCtl.cpp.gcc44 openexr_viewers-1.0
      #include <iostream>
  
      using namespace std;
-diff -up openexr_viewers-1.0.1/playexr/ctlToLut.cpp.gcc44 openexr_viewers-1.0.1/playexr/ctlToLut.cpp
---- openexr_viewers-1.0.1/playexr/ctlToLut.cpp.gcc44	2009-02-13 00:15:27.000000000 +0100
-+++ openexr_viewers-1.0.1/playexr/ctlToLut.cpp	2009-02-13 00:16:28.000000000 +0100
-@@ -48,6 +48,7 @@
-     #include <ImfHeader.h>
-     #include <ImfFrameBuffer.h>
-     #include <cassert>
-+    #include <cstdio>
-     #include <iostream>
- 
-     using namespace std;
-@@ -60,6 +61,7 @@
-     #include <ImfStandardAttributes.h>
-     #include <ImfHeader.h>
-     #include <cassert>
-+    #include <cstdio>
-     #include <iostream>
- 
-     using namespace std;

@@ -11,8 +11,8 @@
 %endif
 
 Name:           %{real_name}
-Version:        1.0.1
-Release:        6%{?dist}
+Version:        1.0.2
+Release:        2%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -23,11 +23,12 @@ Patch0:         openexr_viewers-1.0.1-gcc43.patch
 Patch1:         openexr_viewers-1.0.1-gcc44.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildRequires:  libtool
+
 BuildRequires:  OpenEXR_CTL-devel
 BuildRequires:  OpenEXR_CTL
 BuildRequires:  fltk-devel
 %if %with_Cg
-ExclusiveArch:  i586 x86_64
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
 Provides: OpenEXR_Viewers = %{version}
@@ -69,6 +70,12 @@ This package contains documentation files for %{name}.
 %setup -q -n openexr_viewers-%{version}
 %patch0 -p1 -b .gcc43
 %patch1 -p1 -b .gcc44
+
+%if %{_lib} == lib64
+sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
+%endif
+#Needed to update CTL compiler test
+autoconf
 
 
 %build
@@ -127,19 +134,27 @@ fi
 %endif
 
 %changelog
-* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.0.1-6
-- rebuild for new F11 features
+* Sun Sep 05 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-2
+- Fix CTL Module search path on lib64
+- Fix OpenEXR_CTL detection at build time.
 
-* Mon Mar  9 2009 kwizart < kwizart at gmail.com > - 1.0.1-5
-- Switch i386 to i586
+* Mon Aug 23 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-1
+- Update to 1.0.2
 
-* Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4.1
+* Tue Oct 20 2009 kwizart < kwizart at gmail.com > - 1.0.1-7
+- Rebuild for F-12
+
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.1-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
+* Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Thu Feb 12 2009 kwizart < kwizart at gmail.com > - 1.0.1-4
 - Rebuild for gcc44
-- Restore build for i386 and x86_64 for now.
 
-* Wed Oct 15 2008 kwizart < kwizart at gmail.com > - 1.0.1-3
-- Fix: we are -nonfree
-- Cg only exist on i386 x86_64
+* Fri Oct 17 2008 kwizart < kwizart at gmail.com > - 1.0.1-3
+- Rebuild for F-10
 
 * Sat May 10 2008 kwizart < kwizart at gmail.com > - 1.0.1-2
 - Ghost the alternative provides
