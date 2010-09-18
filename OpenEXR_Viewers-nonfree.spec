@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -21,6 +21,7 @@ URL:            http://www.openexr.com
 Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
 Patch0:         openexr_viewers-1.0.1-gcc43.patch
 Patch1:         openexr_viewers-1.0.1-gcc44.patch
+Patch2:         openexr_viewers-1.0.2-gccCg.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libtool
@@ -70,6 +71,7 @@ This package contains documentation files for %{name}.
 %setup -q -n openexr_viewers-%{version}
 %patch0 -p1 -b .gcc43
 %patch1 -p1 -b .gcc44
+%patch2 -p1 -b .gccCg
 
 %if %{_lib} == lib64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
@@ -134,6 +136,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 18 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-3
+- Fix gcc44 in Cg case
+
 * Sun Sep 05 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-2
 - Fix CTL Module search path on lib64
 - Fix OpenEXR_CTL detection at build time.
