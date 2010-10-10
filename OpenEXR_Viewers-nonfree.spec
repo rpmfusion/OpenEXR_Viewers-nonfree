@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -136,6 +136,9 @@ fi
 %endif
 
 %changelog
+* Sun Oct 10 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-4
+- rebuilt for compiler bug
+
 * Sat Sep 18 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-3
 - Fix gcc44 in Cg case
 
