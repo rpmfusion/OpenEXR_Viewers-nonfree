@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -22,6 +22,8 @@ Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_vie
 Patch0:         openexr_viewers-1.0.1-gcc43.patch
 Patch1:         openexr_viewers-1.0.1-gcc44.patch
 Patch2:         openexr_viewers-1.0.2-gccCg.patch
+# fix dso (missing symbols) by explicitly linking -lGL too
+Patch3:         openexr_viewers-1.0.2-dso.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libtool
@@ -136,6 +138,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 06 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-5
+- Add patch from rdieter
+
 * Sun Oct 10 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-4
 - rebuilt for compiler bug
 

@@ -1,0 +1,24 @@
+diff -up openexr_viewers-1.0.2/exrdisplay/Makefile.am.dso openexr_viewers-1.0.2/exrdisplay/Makefile.am
+--- openexr_viewers-1.0.2/exrdisplay/Makefile.am.dso	2007-03-28 01:06:46.000000000 -0500
++++ openexr_viewers-1.0.2/exrdisplay/Makefile.am	2011-06-24 12:48:56.676196480 -0500
+@@ -7,7 +7,7 @@ bin_PROGRAMS = exrdisplay
+ INCLUDES = @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
+ 	@OPENEXR_CTL_CXXFLAGS@
+ 
+-LDADD = @CG_LDFLAGS@ @FLTK_LDFLAGS@ \
++LDADD = @CG_LDFLAGS@ @FLTK_LDFLAGS@ -lGL \
+ 	@OPENEXR_CTL_LDFLAGS@ \
+ 	@OPENEXR_CTL_LIBS@
+ 
+diff -up openexr_viewers-1.0.2/exrdisplay/Makefile.in.dso openexr_viewers-1.0.2/exrdisplay/Makefile.in
+--- openexr_viewers-1.0.2/exrdisplay/Makefile.in.dso	2010-07-22 19:46:29.000000000 -0500
++++ openexr_viewers-1.0.2/exrdisplay/Makefile.in	2011-06-24 12:49:19.426317303 -0500
+@@ -214,7 +214,7 @@ target_alias = @target_alias@
+ @HAVE_FLTK_TRUE@INCLUDES = @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
+ @HAVE_FLTK_TRUE@	@OPENEXR_CTL_CXXFLAGS@
+ 
+-@HAVE_FLTK_TRUE@LDADD = @CG_LDFLAGS@ @FLTK_LDFLAGS@ \
++@HAVE_FLTK_TRUE@LDADD = @CG_LDFLAGS@ @FLTK_LDFLAGS@ -lGL \
+ @HAVE_FLTK_TRUE@	@OPENEXR_CTL_LDFLAGS@ \
+ @HAVE_FLTK_TRUE@	@OPENEXR_CTL_LIBS@
+ 
