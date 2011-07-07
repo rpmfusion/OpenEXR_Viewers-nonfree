@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -74,6 +74,7 @@ This package contains documentation files for %{name}.
 %patch0 -p1 -b .gcc43
 %patch1 -p1 -b .gcc44
 %patch2 -p1 -b .gccCg
+%patch3 -p1 -b .ld
 
 %if %{_lib} == lib64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
@@ -138,6 +139,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 07 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-6
+- Bump for fltk rebuilt
+
 * Wed Jul 06 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-5
 - Add patch from rdieter
 
