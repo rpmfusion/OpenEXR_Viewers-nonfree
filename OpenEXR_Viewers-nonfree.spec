@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -139,6 +139,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-7
+- Bump
+
 * Thu Jul 07 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-6
 - Bump for fltk rebuilt
 
