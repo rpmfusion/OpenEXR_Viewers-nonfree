@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -24,6 +24,7 @@ Patch1:         openexr_viewers-1.0.1-gcc44.patch
 Patch2:         openexr_viewers-1.0.2-gccCg.patch
 # fix dso (missing symbols) by explicitly linking -lGL too
 Patch3:         openexr_viewers-1.0.2-dso.patch
+Patch4:         openexr_viewers-1.0.2-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libtool
@@ -75,6 +76,7 @@ This package contains documentation files for %{name}.
 %patch1 -p1 -b .gcc44
 %patch2 -p1 -b .gccCg
 %patch3 -p1 -b .ld
+%patch4 -p1 -b .gcc47
 
 %if %{_lib} == lib64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
@@ -139,6 +141,9 @@ fi
 %endif
 
 %changelog
+* Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-10
+- Fix for gcc47
+
 * Thu Mar 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-9
 - Rebuilt for c++ ABI breakage
 

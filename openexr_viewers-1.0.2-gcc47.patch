@@ -1,0 +1,11 @@
+diff -up openexr_viewers-1.0.2/playexr/main.cpp.gcc47 openexr_viewers-1.0.2/playexr/main.cpp
+--- openexr_viewers-1.0.2/playexr/main.cpp.gcc47	2012-05-01 19:15:42.823535233 +0200
++++ openexr_viewers-1.0.2/playexr/main.cpp	2012-05-01 19:18:51.106274899 +0200
+@@ -48,6 +48,7 @@
+ #include <vector>
+ #include <string>
+ #include <stdlib.h>
++#include <unistd.h>
+ #include <cstring>
+ 
+ using namespace std;
