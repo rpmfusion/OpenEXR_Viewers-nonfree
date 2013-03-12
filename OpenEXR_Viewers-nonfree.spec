@@ -12,15 +12,19 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
 License:        AMPAS BSD
 URL:            http://www.openexr.com
 Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
+Patch0:         openexr_viewers-1.0.1-gcc43.patch
+Patch1:         openexr_viewers-1.0.1-gcc44.patch
+Patch2:         openexr_viewers-1.0.2-gccCg.patch
 # fix dso (missing symbols) by explicitly linking -lGL too
 Patch3:         openexr_viewers-1.0.2-dso.patch
+Patch4:         openexr_viewers-1.0.2-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libtool
@@ -35,6 +39,8 @@ Provides: OpenEXR_Viewers = %{version}
 %else
 BuildConflicts:  Cg
 %endif
+# Last version was in F-7 - Can be dropped in F-10
+Obsoletes: OpenEXR-utils < 1.6.0
 
 Requires:  OpenEXR_CTL
 Requires(post): /usr/sbin/alternatives
@@ -66,14 +72,17 @@ This package contains documentation files for %{name}.
 
 %prep
 %setup -q -n openexr_viewers-%{version}
+%patch0 -p1 -b .gcc43
+%patch1 -p1 -b .gcc44
+%patch2 -p1 -b .gccCg
 %patch3 -p1 -b .ld
+%patch4 -p1 -b .gcc47
 
 %if %{_lib} == lib64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
 %endif
 #Needed to update CTL compiler test
-autoconf
-
+./bootstrap
 
 %build
 export CXXFLAGS="$RPM_OPT_FLAGS -L%{_libdir}"
@@ -131,8 +140,8 @@ fi
 %endif
 
 %changelog
-* Tue Mar 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-12
-- https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+* Tue Mar 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-13
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
 * Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-10
 - Fix for gcc47
