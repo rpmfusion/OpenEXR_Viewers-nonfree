@@ -39,8 +39,6 @@ Provides: OpenEXR_Viewers = %{version}
 %else
 BuildConflicts:  Cg
 %endif
-# Last version was in F-7 - Can be dropped in F-10
-Obsoletes: OpenEXR-utils < 1.6.0
 
 Requires:  OpenEXR_CTL
 Requires(post): /usr/sbin/alternatives
