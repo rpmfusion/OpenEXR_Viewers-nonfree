@@ -12,7 +12,7 @@
 
 Name:           %{real_name}
 Version:        1.0.2
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -138,6 +138,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-15
+- Rebuilt
+
 * Fri Dec 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-14
 - Rebuilt
 
