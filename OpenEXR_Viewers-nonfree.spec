@@ -1,3 +1,5 @@
+%global _default_patch_fuzz 2
+
 # nVidia Cg toolkit is not free
 %define with_Cg         1
 %if %with_Cg
@@ -10,28 +12,32 @@
 %define priority        5
 %endif
 
+%if 0%{?fedora} < 21
+# https://bugzilla.redhat.com/1017873
+%define openexr_ctl 1
+%endif
+
 Name:           %{real_name}
-Version:        1.0.2
-Release:        15%{?dist}
+Version:        2.1.0
+Release:        3%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
 License:        AMPAS BSD
 URL:            http://www.openexr.com
 Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
-Patch0:         openexr_viewers-1.0.1-gcc43.patch
-Patch1:         openexr_viewers-1.0.1-gcc44.patch
-Patch2:         openexr_viewers-1.0.2-gccCg.patch
-# fix dso (missing symbols) by explicitly linking -lGL too
-Patch3:         openexr_viewers-1.0.2-dso.patch
-Patch4:         openexr_viewers-1.0.2-gcc47.patch
+# missing header from ^^, should be fixed/included in subsequent releases
+Source1:        namespaceAlias.h
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Patch1: openexr_viewers-2.0.1-dso.patch
+# fix ftbfs due to missing header
+Patch2: openexr_viewers-2.1.0-headers.patch
 
 BuildRequires:  libtool
 
-BuildRequires:  OpenEXR_CTL-devel
-BuildRequires:  OpenEXR_CTL
-BuildRequires:  fltk-devel
+BuildRequires:  fltk-devel >= 1.1
+BuildRequires:  pkgconfig(OpenEXR) >= 2.1
 %if %with_Cg
 BuildRequires:  Cg
 BuildRequires:  freeglut-devel
@@ -40,7 +46,11 @@ Provides: OpenEXR_Viewers = %{version}
 BuildConflicts:  Cg
 %endif
 
+%if 0%{?openexr_ctl}
+BuildRequires:  OpenEXR_CTL-devel
+BuildRequires:  OpenEXR_CTL
 Requires:  OpenEXR_CTL
+%endif
 Requires(post): /usr/sbin/alternatives
 Requires(preun): /usr/sbin/alternatives
 
@@ -70,21 +80,25 @@ This package contains documentation files for %{name}.
 
 %prep
 %setup -q -n openexr_viewers-%{version}
-%patch0 -p1 -b .gcc43
-%patch1 -p1 -b .gcc44
-%patch2 -p1 -b .gccCg
-%patch3 -p1 -b .ld
-%patch4 -p1 -b .gcc47
+
+%patch1 -p1 -b .dso
+cp -n %{SOURCE1} exrdisplay/namespaceAlias.h
+#patch2 -p1 -b .header
 
 %if %{_lib} == lib64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
 %endif
-#Needed to update CTL compiler test
+#Needed for patch1 and to update CTL compiler test
+#autoconf
 ./bootstrap
+sed -i -e 's|#include <vector>\n    using namespace Ctl|#include <vector>\n    #include <cstdlib>\nusing namespace Ctl|' configure
+
 
 %build
 export CXXFLAGS="$RPM_OPT_FLAGS -L%{_libdir}"
 %configure  --disable-static \
+  --disable-openexrtest \
+  --disable-openexrctltest \
 %if %with_Cg
   --with-cg-prefix=%{_prefix}
 %endif
@@ -138,38 +152,55 @@ fi
 %endif
 
 %changelog
-* Fri Dec 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-15
-- Rebuilt
+* Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
-* Fri Dec 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-14
-- Rebuilt
+* Fri Jun 06 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
-* Tue Mar 12 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-13
+* Wed Nov 27 2013 Rex Dieter <rdieter@fedoraproject.org> 2.1.0-1
+- 2.1.0
+
+* Fri Oct 11 2013 Rex Dieter <rdieter@fedoraproject.org> 2.0.1-3
+- OpenEXR_Viewers FTBFS: ImplicitDSO Linking issues (#1017880)
+
+* Thu Oct 10 2013 Rex Dieter <rdieter@fedoraproject.org> 2.0.1-2
+- make OpenEXR_CTL support optional (since it doesn't support openexr-2.x yet)
+
+* Sat Oct 05 2013 Nicolas Chauvet <kwizart@gmail.com> - 2.0.1-1
+- Update to 2.0.1
+
+* Sat Sep 14 2013 Bruno Wolff III <bruno@wolff.to> - 1.0.2-13
+- Rebuild for ilmbase related soname bumps
+
+* Fri Aug 02 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
+* Mon Mar 11 2013 Rex Dieter <rdieter@fedoraproject.org> - 1.0.2-11
+- rebuild (OpenEXR)
+
+* Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
-* Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-10
-- Fix for gcc47
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
-* Thu Mar 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-9
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-8
 - Rebuilt for c++ ABI breakage
 
-* Thu Feb 09 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-8
+* Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
-* Fri Jul 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-7
-- Bump
+* Fri Jun 24 2011 Rex Dieter <rdieter@fedoraproject.org> 1.0.2-6
+- FTBFS OpenEXR_Viewers-1.0.2-3.fc15: ImplicitDSOLinking (#716011)
 
-* Thu Jul 07 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-6
-- Bump for fltk rebuilt
+* Fri May 27 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-5
+- Update gcc44 patch
+- Rebuild for new fltk
+- Drop old Obsoletes OpenEXR-utils < 1.6.0
 
-* Wed Jul 06 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-5
-- Add patch from rdieter
-
-* Sun Oct 10 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-4
-- rebuilt for compiler bug
-
-* Sat Sep 18 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-3
-- Fix gcc44 in Cg case
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
 * Sun Sep 05 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.0.2-2
 - Fix CTL Module search path on lib64
