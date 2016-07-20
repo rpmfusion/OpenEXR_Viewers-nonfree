@@ -85,7 +85,7 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n openexr_viewers-%{version}
 
-#%patch1 -p1 -b .dso
+%patch1 -p1 -b .dso
 cp -n %{SOURCE1} exrdisplay/namespaceAlias.h
 #patch2 -p1 -b .header
 
