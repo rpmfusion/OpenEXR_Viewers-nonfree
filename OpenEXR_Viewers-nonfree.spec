@@ -29,6 +29,7 @@ Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_vie
 # missing header from ^^, should be fixed/included in subsequent releases
 Source1:        namespaceAlias.h
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ExclusiveArch:  i686 x86_64
 
 Patch1: openexr_viewers-2.0.1-dso.patch
 # fix ftbfs due to missing header
