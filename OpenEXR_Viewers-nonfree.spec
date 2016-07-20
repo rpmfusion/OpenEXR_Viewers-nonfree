@@ -1,7 +1,11 @@
 %global _default_patch_fuzz 2
 
 # nVidia Cg toolkit is not free
+%ifarch armv7hl
+%define with_Cg         0
+%else
 %define with_Cg         1
+%endif
 %if %with_Cg
 %define real_name       OpenEXR_Viewers-nonfree
 %define V_suffix        -nonfree
