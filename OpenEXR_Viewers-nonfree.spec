@@ -18,8 +18,8 @@
 %endif
 
 Name:           %{real_name}
-Version:        2.1.0
-Release:        3%{?dist}
+Version:        2.2.0
+Release:        1%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -81,7 +81,7 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n openexr_viewers-%{version}
 
-%patch1 -p1 -b .dso
+#%patch1 -p1 -b .dso
 cp -n %{SOURCE1} exrdisplay/namespaceAlias.h
 #patch2 -p1 -b .header
 
@@ -152,6 +152,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 20 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.2.0-1
+- 2.2.0
+
 * Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
