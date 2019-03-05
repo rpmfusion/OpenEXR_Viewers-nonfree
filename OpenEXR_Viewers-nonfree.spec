@@ -36,7 +36,7 @@ Patch1: openexr_viewers-2.0.1-dso.patch
 Patch2: openexr_viewers-2.1.0-headers.patch
 
 BuildRequires:  libtool
-
+BuildRequires:  gcc-c++
 BuildRequires:  fltk-devel >= 1.1
 BuildRequires:  pkgconfig(OpenEXR) >= 2.1
 %if %with_Cg
