@@ -19,7 +19,7 @@
 
 Name:           %{real_name}
 Version:        2.2.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -153,6 +153,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Sun Aug 19 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-6
 - Rebuilt for Fedora 29 Mass Rebuild binutils issue
 
