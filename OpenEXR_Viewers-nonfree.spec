@@ -12,23 +12,17 @@
 %define priority        5
 %endif
 
-%if 0%{?fedora} < 21
-# https://bugzilla.redhat.com/1017873
-%define openexr_ctl 1
-%endif
-
 Name:           %{real_name}
-Version:        2.2.0
-Release:        11%{?dist}
+Version:        2.2.1
+Release:        1%{?dist}
 Summary:        Viewers programs for OpenEXR
 
-Group:          Applications/Multimedia
 License:        AMPAS BSD
 URL:            http://www.openexr.com
 Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
 # missing header from ^^, should be fixed/included in subsequent releases
 Source1:        namespaceAlias.h
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
 ExclusiveArch:  i686 x86_64
 
 Patch1: openexr_viewers-2.0.1-dso.patch
@@ -47,11 +41,6 @@ Provides: OpenEXR_Viewers = %{version}
 BuildConflicts:  Cg
 %endif
 
-%if 0%{?openexr_ctl}
-BuildRequires:  OpenEXR_CTL-devel
-BuildRequires:  OpenEXR_CTL
-Requires:  OpenEXR_CTL
-%endif
 Requires(post): /usr/sbin/alternatives
 Requires(preun): /usr/sbin/alternatives
 
@@ -73,7 +62,6 @@ See: http://developer.nvidia.com/object/cg_toolkit.html
 
 %package docs
 Summary:        Documentation for %{name}
-Group:          Documentation
 
 %description docs
 This package contains documentation files for %{name}.
@@ -86,7 +74,7 @@ This package contains documentation files for %{name}.
 cp -n %{SOURCE1} exrdisplay/namespaceAlias.h
 #patch2 -p1 -b .header
 
-%if %{_lib} == lib64
+%ifarch x86_64
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
 %endif
 #Needed for patch1 and to update CTL compiler test
@@ -107,12 +95,11 @@ export CXXFLAGS="$RPM_OPT_FLAGS -L%{_libdir}"
 # Missing libs for playexr
 sed -i -e 's|LIBS =|LIBS = -lglut|' playexr/Makefile
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 # Remove the config.h - uneeded afaik
 rm -rf $RPM_BUILD_ROOT%{_includedir}
@@ -126,9 +113,6 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
 # Owernship of the alternative provides
 touch $RPM_BUILD_ROOT%{_bindir}/exrdisplay
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %post
 alternatives --install %{_bindir}/exrdisplay exrdisplay %{_bindir}/exrdisplay%{V_suffix} %{priority} ||:
 
@@ -139,7 +123,6 @@ if [ $1 -eq 0 ]; then
 fi
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING NEWS README
 %ghost %{_bindir}/exrdisplay
 %{_bindir}/exrdisplay%{V_suffix}
@@ -148,13 +131,12 @@ fi
 %else
 
 %files docs
-%defattr(-,root,root,-)
 %doc doc/OpenEXRViewers.odt doc/OpenEXRViewers.pdf
 %endif
 
 %changelog
-* Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com>
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+* Thu Feb 04 2021 Leigh Scott <leigh123linux@gmail.com> - 2.2.1-1
+- 2.2.1
 
 * Wed Aug 19 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
