@@ -19,7 +19,7 @@
 
 Name:           %{real_name}
 Version:        2.2.0
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 Group:          Applications/Multimedia
@@ -153,6 +153,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com>
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Wed Aug 19 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
