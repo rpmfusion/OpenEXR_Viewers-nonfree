@@ -14,7 +14,7 @@
 
 Name:           %{real_name}
 Version:        2.2.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 License:        AMPAS BSD
@@ -135,6 +135,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Thu Feb 04 2021 Leigh Scott <leigh123linux@gmail.com> - 2.2.1-1
 - 2.2.1
 
