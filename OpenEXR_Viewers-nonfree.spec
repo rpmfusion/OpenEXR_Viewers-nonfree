@@ -1,6 +1,4 @@
-%global _default_patch_fuzz 2
-
-# nVidia Cg toolkit is not free
+# NVIDIA Cg toolkit is not free
 %define with_Cg         1
 %if %with_Cg
 %define real_name       OpenEXR_Viewers-nonfree
@@ -12,25 +10,25 @@
 %define priority        5
 %endif
 
+%global project openexr
+
 Name:           %{real_name}
-Version:        2.2.1
-Release:        2%{?dist}
+Version:        2.3.0
+Release:        1%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 License:        AMPAS BSD
 URL:            http://www.openexr.com
-Source0:        http://download.savannah.nongnu.org/releases/openexr/openexr_viewers-%{version}.tar.gz
-# missing header from ^^, should be fixed/included in subsequent releases
-Source1:        namespaceAlias.h
+Source0: https://github.com/%{project}/%{project}/releases/download/v%{version}/OpenEXR_Viewers-%{version}.tar.gz
 
 ExclusiveArch:  i686 x86_64
 
 Patch1: openexr_viewers-2.0.1-dso.patch
-# fix ftbfs due to missing header
-Patch2: openexr_viewers-2.1.0-headers.patch
 
+BuildRequires:  make
 BuildRequires:  libtool
 BuildRequires:  gcc-c++
+
 BuildRequires:  fltk-devel >= 1.1
 BuildRequires:  pkgconfig(OpenEXR) >= 2.1
 %if %with_Cg
@@ -41,6 +39,11 @@ Provides: OpenEXR_Viewers = %{version}
 BuildConflicts:  Cg
 %endif
 
+%if 0%{?openexr_ctl}
+BuildRequires:  pkgconfig(OpenEXR_CTL)
+BuildRequires:  OpenEXR_CTL
+Requires:  OpenEXR_CTL%{?_isa}
+%endif
 Requires(post): /usr/sbin/alternatives
 Requires(preun): /usr/sbin/alternatives
 
@@ -56,8 +59,8 @@ with CTL support, applying rendering and display transforms in line with
 the current discussions at the AMPAS Image Interchange Framework committee
 (September 2006).
 
-This is the nonfree version compiled with nVidia Cg support
-See: http://developer.nvidia.com/object/cg_toolkit.html
+This is the nonfree version compiled with NVIDIA Cg support
+See: https://developer.nvidia.com/cg-toolkit
 %else
 
 %package docs
@@ -71,10 +74,8 @@ This package contains documentation files for %{name}.
 %setup -q -n openexr_viewers-%{version}
 
 %patch1 -p1 -b .dso
-cp -n %{SOURCE1} exrdisplay/namespaceAlias.h
-#patch2 -p1 -b .header
 
-%ifarch x86_64
+%if "%{_lib}" == "lib64"
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
 %endif
 #Needed for patch1 and to update CTL compiler test
@@ -123,7 +124,8 @@ if [ $1 -eq 0 ]; then
 fi
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc ChangeLog README.md
+%license LICENSE
 %ghost %{_bindir}/exrdisplay
 %{_bindir}/exrdisplay%{V_suffix}
 %if %with_Cg
@@ -135,6 +137,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 08 2021 Nicolas Chauvet <kwizart@gmail.com> - 2.3.0-1
+- Update to 2.3.0
+
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
