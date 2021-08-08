@@ -1,7 +1,6 @@
-diff -up openexr_viewers-2.0.1/configure.ac.dso openexr_viewers-2.0.1/configure.ac
---- openexr_viewers-2.0.1/configure.ac.dso	2013-06-18 15:58:29.000000000 -0500
-+++ openexr_viewers-2.0.1/configure.ac	2013-10-11 14:15:38.870351295 -0500
-@@ -75,6 +75,18 @@ AM_PATH_PKGCONFIG(
+--- a/configure.ac
++++ b/configure.ac
+@@ -77,6 +77,18 @@ AM_PATH_PKGCONFIG(
     [-lIlmImfCtl -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lpthread -lIlmCtlSimd -lIlmCtlMath -lIlmCtl],
     [openexrctl-prefix])
  
@@ -18,11 +17,10 @@ diff -up openexr_viewers-2.0.1/configure.ac.dso openexr_viewers-2.0.1/configure.
 +   [-lGL],
 +   [gl-prefix])
  
- dnl --enable-threading
- AC_ARG_ENABLE(threading,
-diff -up openexr_viewers-2.0.1/exrdisplay/Makefile.am.dso openexr_viewers-2.0.1/exrdisplay/Makefile.am
---- openexr_viewers-2.0.1/exrdisplay/Makefile.am.dso	2013-06-18 14:51:41.000000000 -0500
-+++ openexr_viewers-2.0.1/exrdisplay/Makefile.am	2013-10-11 14:17:07.953771623 -0500
+ dnl Enable and choose c++ standard
+ AC_ARG_ENABLE(cxxstd,
+--- a/exrdisplay/Makefile.am
++++ b/exrdisplay/Makefile.am
 @@ -5,11 +5,12 @@ if HAVE_FLTK
  bin_PROGRAMS = exrdisplay
  
