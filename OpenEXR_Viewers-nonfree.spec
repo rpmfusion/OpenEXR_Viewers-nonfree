@@ -14,7 +14,7 @@
 
 Name:           %{real_name}
 Version:        2.3.0
-Release:        1%{?dist}
+Release:        8%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 License:        AMPAS BSD
@@ -24,6 +24,8 @@ Source0: https://github.com/%{project}/%{project}/releases/download/v%{version}/
 ExclusiveArch:  i686 x86_64
 
 Patch1: openexr_viewers-2.0.1-dso.patch
+Patch2: openexr_viewers-gcc-11-fixes.patch
+Patch3: openexr_viewers-imfheader.patch
 
 BuildRequires:  make
 BuildRequires:  libtool
@@ -74,6 +76,8 @@ This package contains documentation files for %{name}.
 %setup -q -n openexr_viewers-%{version}
 
 %patch1 -p1 -b .dso
+%patch2 -p1 -b .gcc11
+%patch3 -p1 -b .imfh
 
 %if "%{_lib}" == "lib64"
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
@@ -137,43 +141,68 @@ fi
 %endif
 
 %changelog
-* Sun Aug 08 2021 Nicolas Chauvet <kwizart@gmail.com> - 2.3.0-1
-- Update to 2.3.0
+* Mon Jan 03 2022 Nicolas Chauvet <kwizart@gmail.com> - 2.3.0-8
+- Fix FTBFS
 
-* Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.1-2
+* Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
-* Thu Feb 04 2021 Leigh Scott <leigh123linux@gmail.com> - 2.2.1-1
-- 2.2.1
+* Mon Jan 25 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
-* Wed Aug 19 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-10
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
-* Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-9
+* Thu Apr 02 2020 Björn Esser <besser82@fedoraproject.org> - 2.3.0-4
+- Fix string quoting for rpm >= 4.16
+
+* Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
-* Fri Aug 09 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-8
+* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
-* Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-7
+* Tue Apr 02 2019 Richard Shaw <hobbes1069@gmail.com> - 2.3.0-1
+- Update to 2.3.0.
+
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
-* Sun Aug 19 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-6
-- Rebuilt for Fedora 29 Mass Rebuild binutils issue
+* Mon Oct 01 2018 Nicolas Chauvet <kwizart@gmail.com> - 2.2.1-1
+- Update to 2.2.1
 
-* Fri Jul 27 2018 RPM Fusion Release Engineering <sergio@serjux.com> - 2.2.0-5
+* Thu Jul 19 2018 Nicolas Chauvet <kwizart@gmail.com> - 2.2.0-11
+- Spec clean-up
+- Enable CTL with 1.5.2 update
+
+* Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
-* Fri Mar 02 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 2.2.0-4
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
-* Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2.2.0-3
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
-* Sat Mar 25 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2.2.0-2
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
-* Wed Jul 20 2016 Leigh Scott <leigh123linux@googlemail.com> - 2.2.0-1
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Tue Jun 16 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 2.2.0-3
+- Rebuilt for GCC 5 C++11 ABI change
+
+* Thu Feb 19 2015 Rex Dieter <rdieter@fedoraproject.org> 2.2.0-2
+- rebuild (fltk)
+
+* Tue Nov 25 2014 Rex Dieter <rdieter@fedoraproject.org> 2.2.0-1
 - 2.2.0
 
 * Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1.0-3
