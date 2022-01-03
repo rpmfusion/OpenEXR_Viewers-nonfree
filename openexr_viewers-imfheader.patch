@@ -1,0 +1,36 @@
+diff -ur openexr_viewers-2.3.0/exrdisplay/ImageView.cpp openexr_viewers-2.3.0-header/exrdisplay/ImageView.cpp
+--- openexr_viewers-2.3.0/exrdisplay/ImageView.cpp	2022-01-03 16:33:02.598890275 +0100
++++ openexr_viewers-2.3.0-header/exrdisplay/ImageView.cpp	2022-01-03 16:32:38.322095618 +0100
+@@ -44,7 +44,7 @@
+ 
+ #include <ImathMath.h>
+ #include <ImathFun.h>
+-#include <ImathLimits.h>
++#include <ImfHeader.h>
+ #include <halfFunction.h>
+ 
+ 
+diff -ur openexr_viewers-2.3.0/exrdisplay/main.cpp openexr_viewers-2.3.0-header/exrdisplay/main.cpp
+--- openexr_viewers-2.3.0/exrdisplay/main.cpp	2022-01-03 16:33:02.598890275 +0100
++++ openexr_viewers-2.3.0-header/exrdisplay/main.cpp	2022-01-03 16:32:38.324095601 +0100
+@@ -63,7 +63,7 @@
+ #include <ImfArray.h>
+ #include <ImfThreading.h>
+ #include <ImfMultiPartInputFile.h>
+-#include <ImathLimits.h>
++#include <ImfHeader.h>
+ 
+ #include <iostream>
+ #include <algorithm>
+diff -ur openexr_viewers-2.3.0/exrdisplay/scaleImage.cpp openexr_viewers-2.3.0-header/exrdisplay/scaleImage.cpp
+--- openexr_viewers-2.3.0/exrdisplay/scaleImage.cpp	2022-01-03 16:33:02.598890275 +0100
++++ openexr_viewers-2.3.0-header/exrdisplay/scaleImage.cpp	2022-01-03 16:32:38.323095609 +0100
+@@ -41,7 +41,7 @@
+ 
+ #include "scaleImage.h"
+ 
+-#include <ImathLimits.h>
++#include <ImfHeader.h>
+ #include <ImathFun.h>
+ #include <algorithm>
+ #include <math.h>
