@@ -14,7 +14,7 @@
 
 Name:           %{real_name}
 Version:        2.3.0
-Release:        12%{?dist}
+Release:        14%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 License:        AMPAS BSD
@@ -75,9 +75,9 @@ This package contains documentation files for %{name}.
 %prep
 %setup -q -n openexr_viewers-%{version}
 
-%patch1 -p1 -b .dso
-%patch2 -p1 -b .gcc11
-%patch3 -p1 -b .imfh
+%patch -P1 -p1 -b .dso
+%patch -P2 -p1 -b .gcc11
+%patch -P3 -p1 -b .imfh
 
 %if "%{_lib}" == "lib64"
 sed -i -e 's|ACTUAL_PREFIX/lib/CTL|ACTUAL_PREFIX/lib64/CTL|' configure.ac
@@ -141,6 +141,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 17 2024 Nicolas Chauvet <kwizart@gmail.com> - 2.3.0-14
+- Rebuilt
+
 * Sun Feb 04 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.3.0-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
