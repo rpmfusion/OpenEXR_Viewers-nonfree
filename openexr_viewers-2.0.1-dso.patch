@@ -1,0 +1,37 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -77,6 +77,18 @@ AM_PATH_PKGCONFIG(
+    [-lIlmImfCtl -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lpthread -lIlmCtlSimd -lIlmCtlMath -lIlmCtl],
+    [openexrctl-prefix])
+ 
++dnl 
++dnl check gl
++dnl
++AM_PATH_PKGCONFIG(
++   [GL_CFLAGS],
++   [GL_LDFLAGS],
++   [GL_LIBS],
++   [gl],
++   ,
++   [$LIB64_IF_EXISTS -L/usr/local/lib],
++   [-lGL],
++   [gl-prefix])
+ 
+ dnl Enable and choose c++ standard
+ AC_ARG_ENABLE(cxxstd,
+--- a/exrdisplay/Makefile.am
++++ b/exrdisplay/Makefile.am
+@@ -5,11 +5,12 @@ if HAVE_FLTK
+ bin_PROGRAMS = exrdisplay
+ 
+ INCLUDES = @OPENEXR_CXXFLAGS@ \
+-        @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
++        @GL_CFLAGS@ @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
+ 	@OPENEXR_CTL_CXXFLAGS@
+ 
+ LDADD = @OPENEXR_LDFLAGS@ @OPENEXR_LIBS@ \
+         @OPENEXR_CTL_LDFLAGS@ @OPENEXR_CTL_LIBS@ \
++	@GL_LDFLAGS@ @GL_LIBS@ \
+         @CG_LDFLAGS@ @FLTK_LDFLAGS@
+         
+ all-local:
