@@ -14,7 +14,7 @@
 
 Name:           %{real_name}
 Version:        2.3.0
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        Viewers programs for OpenEXR
 
 License:        AMPAS BSD
@@ -141,6 +141,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.3.0-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
 * Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.3.0-17
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
 
